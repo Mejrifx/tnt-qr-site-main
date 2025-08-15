@@ -79,7 +79,7 @@ const DiscountForm = () => {
 
   if (isSuccess) {
     return (
-      <section id="discount-form" className="py-20 px-4 bg-gradient-to-br from-orange-50 to-orange-100">
+      <section id="discount-form" className="py-20 px-4 bg-white">
         <div className="max-w-2xl mx-auto text-center">
           <div className="bg-white rounded-3xl p-8 md:p-12 bounce-in" style={{boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px -4px rgba(255, 107, 53, 0.4)'}}>
             <div className="flex justify-center mb-6">
@@ -136,7 +136,7 @@ const DiscountForm = () => {
   }
 
   return (
-    <section id="discount-form" className="py-20 px-4 bg-gradient-to-br from-orange-50 to-orange-100">
+    <section id="discount-form" className="py-20 px-4 bg-white">
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-3xl p-8 md:p-12 fade-in" style={{boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px -4px rgba(255, 107, 53, 0.4)'}}>
           {/* Header */}
