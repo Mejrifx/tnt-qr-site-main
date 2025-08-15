@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* TNT Car Wash Design System - Mobile-first Meta-inspired aesthetics */
+
+@layer base {
+  :root {
+    /* TNT Brand Colors */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+
+    /* TNT Orange Primary */
+    --primary: 24 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Clean grays for secondary elements */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 24 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 95%;
+    --ring: 24 100% 50%;
+
+    --radius: 12px;
+
+    /* TNT Custom Design Tokens */
+    --tnt-orange: 24 100% 50%;
+    --tnt-orange-light: 24 100% 95%;
+    --tnt-orange-dark: 24 100% 40%;
+    --tnt-black: 0 0% 9%;
+    --tnt-gray: 0 0% 45%;
+    --tnt-gray-light: 0 0% 96%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--tnt-orange)), hsl(var(--tnt-orange-dark)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--background)), hsl(var(--tnt-gray-light)));
+
+    /* Shadows */
+    --shadow-card: 0 4px 12px -2px hsl(var(--tnt-orange) / 0.1);
+    --shadow-button: 0 4px 14px 0 hsl(var(--tnt-orange) / 0.25);
+    --shadow-hero: 0 20px 40px -12px hsl(var(--tnt-orange) / 0.25);
+
+    /* Typography */
+    --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+
+    --radius: 12px;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-display;
+  }
+}
+
+@layer components {
+  /* TNT Hero Button */
+  .btn-hero {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-4 px-8 rounded-xl;
+    @apply transform transition-all duration-200 hover:scale-105 active:scale-95;
+    box-shadow: var(--shadow-button);
+  }
+
+  /* TNT Service Card */
+  .service-card {
+    @apply bg-white border border-gray-200 rounded-2xl p-6 transition-all duration-300;
+    @apply hover:-translate-y-2 hover:border-orange-200;
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1), 0 0 20px -4px rgba(255, 107, 53, 0.3);
+  }
+  
+  .service-card:hover {
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.15), 0 0 30px -2px rgba(255, 107, 53, 0.5);
+  }
+
+  /* Custom radial gradient for hero background */
+  .bg-gradient-radial {
+    background: radial-gradient(circle at center, var(--tw-gradient-stops));
+  }
+
+  /* TNT Form Input */
+  .form-input {
+    @apply w-full p-4 rounded-xl border border-border bg-input;
+    @apply focus:ring-2 focus:ring-ring focus:border-transparent;
+    @apply transition-all duration-200;
+  }
+
+  /* TNT Gradient Text */
+  .gradient-text {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.8s ease-out;
+  }
+
+  .bounce-in {
+    animation: bounceIn 0.5s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
