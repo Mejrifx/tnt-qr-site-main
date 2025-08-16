@@ -93,7 +93,7 @@ const DiscountForm = () => {
             </h2>
             
             <p className="text-lg text-tnt-gray mb-8">
-              Your exclusive 10% discount code has been generated
+              Your exclusive 10% discount code has been generated! You'll also receive special email promotions for your local TNT Services car wash.
             </p>
             
             <div className="bg-tnt-gray-light rounded-2xl p-6 mb-8">
@@ -147,10 +147,10 @@ const DiscountForm = () => {
               </div>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-tnt-black mb-4">
-              Get Your Exclusive 10% Off
+              Get 10% Off + Exclusive Local Promotions
             </h2>
             <p className="text-lg text-tnt-gray">
-              Join thousands of satisfied customers and save on your services
+              Join our exclusive members list for special discounts and email promotions at your local TNT Services car wash
             </p>
           </div>
 
