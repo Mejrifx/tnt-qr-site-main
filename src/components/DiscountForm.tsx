@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { User, Mail, Phone, Car, Gift, CheckCircle, AlertCircle } from "lucide-react";
+import { User, Mail, Phone, Car, Gift, CheckCircle, AlertCircle, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const DiscountForm = () => {
+interface DiscountFormProps {
+  onClose?: () => void;
+  isModal?: boolean;
+}
+
+const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -55,6 +60,13 @@ const DiscountForm = () => {
         description: "Your exclusive discount code has been generated and sent to your email.",
       });
 
+      // Auto-close modal after success (if in modal mode)
+      if (isModal && onClose) {
+        setTimeout(() => {
+          onClose();
+        }, 5000); // Close after 5 seconds
+      }
+
       // Here you would typically:
       // 1. Store form data in database (Supabase)
       // 2. Send email with discount code (SendGrid via Supabase Edge Function)
@@ -79,9 +91,20 @@ const DiscountForm = () => {
 
   if (isSuccess) {
     return (
-      <section id="discount-form" className="py-20 px-4 bg-white">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-white rounded-3xl p-8 md:p-12 bounce-in" style={{boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px -4px rgba(255, 107, 53, 0.4)'}}>
+      <section id="discount-form" className={isModal ? "" : "py-20 px-4 bg-white"}>
+        <div className={isModal ? "mx-auto text-center" : "max-w-2xl mx-auto text-center"}>
+          <div className="bg-white rounded-3xl p-8 md:p-12 bounce-in relative" style={{boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px -4px rgba(255, 107, 53, 0.4)'}}>
+            {/* Close Button for Modal */}
+            {isModal && onClose && (
+              <button
+                onClick={onClose}
+                className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                aria-label="Close"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            )}
+            
             <div className="flex justify-center mb-6">
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
                 <CheckCircle className="w-10 h-10 text-green-600" />
@@ -136,9 +159,20 @@ const DiscountForm = () => {
   }
 
   return (
-    <section id="discount-form" className="py-20 px-4 bg-white">
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-3xl p-8 md:p-12 fade-in" style={{boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px -4px rgba(255, 107, 53, 0.4)'}}>
+    <section id="discount-form" className={isModal ? "" : "py-20 px-4 bg-white"}>
+      <div className={isModal ? "mx-auto" : "max-w-2xl mx-auto"}>
+        <div className="bg-white rounded-3xl p-8 md:p-12 fade-in relative" style={{boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px -4px rgba(255, 107, 53, 0.4)'}}>
+          {/* Close Button for Modal */}
+          {isModal && onClose && (
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          )}
+          
           {/* Header */}
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
