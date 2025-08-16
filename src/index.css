@@ -215,3 +215,23 @@
     transform: scale(1);
   }
 }
+
+/* Glare animation for promotional button */
+.glare-animation {
+  animation: glare 2s infinite;
+}
+
+@keyframes glare {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  50% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  55% {
+    transform: translateX(400%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(400%) skewX(-12deg);
+  }
+}

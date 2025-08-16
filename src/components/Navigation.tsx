@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Phone, MapPin, Clock } from "lucide-react";
 
-const Navigation = () => {
+interface NavigationProps {
+  onOpenModal?: () => void;
+}
+
+const Navigation = ({ onOpenModal }: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -24,7 +28,7 @@ const Navigation = () => {
   const navItems = [
     { label: 'Home', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
     { label: 'Services', action: () => scrollToSection('services') },
-    { label: 'Get Discount', action: () => scrollToSection('discount-form') },
+    { label: 'Get Discount', action: () => onOpenModal && onOpenModal() },
     { label: 'Contact', action: () => scrollToSection('contact') },
   ];
 

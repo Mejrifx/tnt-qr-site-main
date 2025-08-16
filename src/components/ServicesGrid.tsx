@@ -1,6 +1,10 @@
 import { Car, Settings, Wrench, CreditCard, CheckCircle, Gift } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+interface ServicesGridProps {
+  onOpenModal?: () => void;
+}
+
 const services = [
   {
     icon: Car,
@@ -52,7 +56,7 @@ const services = [
   }
 ];
 
-const ServicesGrid = () => {
+const ServicesGrid = ({ onOpenModal }: ServicesGridProps) => {
   const navigate = useNavigate();
 
   const handleButtonClick = (service: typeof services[0]) => {
@@ -130,6 +134,20 @@ const ServicesGrid = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* Promotional CTA Button */}
+        <div className="text-center mt-16">
+          <button
+            onClick={() => onOpenModal && onOpenModal()}
+            className="relative group bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
+          >
+            {/* Button Text */}
+            <span className="relative z-10">🎁 Get a FREE Discount</span>
+            
+            {/* Animated Glare Effect */}
+            <div className="absolute inset-0 -top-2 -bottom-2 w-6 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 glare-animation"></div>
+          </button>
         </div>
       </div>
     </section>

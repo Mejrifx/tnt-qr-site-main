@@ -21,11 +21,15 @@ const Index = () => {
     setShowModal(false);
   };
 
+  const openModal = () => {
+    setShowModal(true);
+  };
+
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
+      <Navigation onOpenModal={openModal} />
       <Hero />
-      <ServicesGrid />
+      <ServicesGrid onOpenModal={openModal} />
       <Footer />
       
       {/* Modal Popup */}
@@ -38,7 +42,7 @@ const Index = () => {
           />
           
           {/* Modal Content */}
-          <div className="relative z-10 w-full max-w-md">
+          <div className="relative z-10 w-full max-w-md max-h-[90vh] overflow-y-auto">
             <DiscountForm onClose={closeModal} isModal={true} />
           </div>
         </div>
