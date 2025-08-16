@@ -1,11 +1,7 @@
 import { QrCode, Sparkles } from "lucide-react";
 
 
-interface HeroProps {
-  onOpenModal?: () => void;
-}
-
-const Hero = ({ onOpenModal }: HeroProps) => {
+const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 py-12 pt-20 overflow-hidden bg-black">
       
@@ -62,28 +58,14 @@ const Hero = ({ onOpenModal }: HeroProps) => {
           Everything your vehicle needs, all in one place.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="slide-up space-y-4" style={{ animationDelay: '0.6s' }}>
+        {/* CTA Button */}
+        <div className="slide-up" style={{ animationDelay: '0.6s' }}>
           <button 
             onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-            className="btn-hero text-lg md:text-xl block mx-auto"
+            className="btn-hero text-lg md:text-xl"
           >
             Explore Our Services
           </button>
-          
-          {/* Get a FREE Discount Button */}
-          <div className="flex justify-center">
-            <button
-              onClick={() => onOpenModal && onOpenModal()}
-              className="relative group bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
-            >
-              {/* Button Text */}
-              <span className="relative z-10">🎁 Get a FREE Discount</span>
-              
-              {/* Animated Glare Effect */}
-              <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-12 glare-animation"></div>
-            </button>
-          </div>
         </div>
 
 

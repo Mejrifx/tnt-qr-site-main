@@ -216,22 +216,3 @@
   }
 }
 
-/* Glare animation for promotional button */
-.glare-animation {
-  animation: glare 2s infinite;
-}
-
-@keyframes glare {
-  0% {
-    transform: translateX(-150%);
-  }
-  50% {
-    transform: translateX(-150%);
-  }
-  65% {
-    transform: translateX(250%);
-  }
-  100% {
-    transform: translateX(250%);
-  }
-}

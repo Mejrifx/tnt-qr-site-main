@@ -28,7 +28,7 @@ const Index = () => {
   return (
           <div className="min-h-screen bg-white">
         <Navigation onOpenModal={openModal} />
-        <Hero onOpenModal={openModal} />
+        <Hero />
         <ServicesGrid onOpenModal={openModal} />
         <Footer />
       
