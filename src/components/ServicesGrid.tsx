@@ -89,7 +89,7 @@ const ServicesGrid = ({ onOpenModal }: ServicesGridProps) => {
               <span className="relative z-10">🎁 Get a FREE Discount</span>
               
               {/* Animated Glare Effect */}
-              <div className="absolute inset-0 -top-2 -bottom-2 w-8 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full glare-animation"></div>
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent transform -skew-x-12 -translate-x-full glare-animation"></div>
             </button>
           </div>
         </div>

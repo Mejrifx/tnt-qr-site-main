@@ -223,15 +223,15 @@
 
 @keyframes glare {
   0% {
-    transform: translateX(-150%) skewX(-12deg);
+    transform: translateX(-200%) skewX(-12deg);
   }
   50% {
-    transform: translateX(-150%) skewX(-12deg);
+    transform: translateX(-200%) skewX(-12deg);
   }
   55% {
-    transform: translateX(600%) skewX(-12deg);
+    transform: translateX(200%) skewX(-12deg);
   }
   100% {
-    transform: translateX(600%) skewX(-12deg);
+    transform: translateX(200%) skewX(-12deg);
   }
 }
