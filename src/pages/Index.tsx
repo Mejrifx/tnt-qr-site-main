@@ -42,7 +42,7 @@ const Index = () => {
           />
           
           {/* Modal Content */}
-          <div className="relative z-10 w-full max-w-md max-h-[90vh] overflow-y-auto">
+          <div className="relative z-10 w-full max-w-sm sm:max-w-md max-h-[90vh] overflow-y-auto">
             <DiscountForm onClose={closeModal} isModal={true} />
           </div>
         </div>

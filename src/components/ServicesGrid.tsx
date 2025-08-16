@@ -75,9 +75,23 @@ const ServicesGrid = ({ onOpenModal }: ServicesGridProps) => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Our Services
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             From premium car washes to expert mechanical services, we've got everything your vehicle needs
           </p>
+          
+          {/* Promotional CTA Button */}
+          <div className="flex justify-center">
+            <button
+              onClick={() => onOpenModal && onOpenModal()}
+              className="relative group bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
+            >
+              {/* Button Text */}
+              <span className="relative z-10">🎁 Get a FREE Discount</span>
+              
+              {/* Animated Glare Effect */}
+              <div className="absolute inset-0 -top-2 -bottom-2 w-8 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full glare-animation"></div>
+            </button>
+          </div>
         </div>
 
         {/* Services grid */}
@@ -134,20 +148,6 @@ const ServicesGrid = ({ onOpenModal }: ServicesGridProps) => {
               </div>
             );
           })}
-        </div>
-
-        {/* Promotional CTA Button */}
-        <div className="text-center mt-16">
-          <button
-            onClick={() => onOpenModal && onOpenModal()}
-            className="relative group bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 overflow-hidden"
-          >
-            {/* Button Text */}
-            <span className="relative z-10">🎁 Get a FREE Discount</span>
-            
-            {/* Animated Glare Effect */}
-            <div className="absolute inset-0 -top-2 -bottom-2 w-6 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 glare-animation"></div>
-          </button>
         </div>
       </div>
     </section>
