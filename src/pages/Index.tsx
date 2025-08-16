@@ -26,11 +26,11 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navigation onOpenModal={openModal} />
-      <Hero />
-      <ServicesGrid onOpenModal={openModal} />
-      <Footer />
+          <div className="min-h-screen bg-white">
+        <Navigation onOpenModal={openModal} />
+        <Hero onOpenModal={openModal} />
+        <ServicesGrid onOpenModal={openModal} />
+        <Footer />
       
       {/* Modal Popup */}
       {showModal && (
