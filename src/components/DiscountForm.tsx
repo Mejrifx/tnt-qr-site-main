@@ -93,29 +93,29 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
     return (
       <section id="discount-form" className={isModal ? "" : "py-20 px-4 bg-white"}>
         <div className={isModal ? "mx-auto text-center" : "max-w-2xl mx-auto text-center"}>
-          <div className="bg-white rounded-3xl p-8 md:p-12 bounce-in relative" style={{boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px -4px rgba(255, 107, 53, 0.4)'}}>
+          <div className={`bg-white rounded-3xl ${isModal ? 'p-6' : 'p-8 md:p-12'} bounce-in relative`} style={{boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px -4px rgba(255, 107, 53, 0.4)'}}>
             {/* Close Button for Modal */}
             {isModal && onClose && (
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                className="absolute top-3 right-3 p-1 text-gray-400 hover:text-gray-600 transition-colors"
                 aria-label="Close"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
             )}
             
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-10 h-10 text-green-600" />
+            <div className={`flex justify-center ${isModal ? 'mb-4' : 'mb-6'}`}>
+              <div className={`${isModal ? 'w-16 h-16' : 'w-20 h-20'} bg-green-100 rounded-full flex items-center justify-center`}>
+                <CheckCircle className={`${isModal ? 'w-8 h-8' : 'w-10 h-10'} text-green-600`} />
               </div>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold text-tnt-black mb-4">
+            <h2 className={`${isModal ? 'text-xl md:text-2xl' : 'text-3xl md:text-4xl'} font-bold text-tnt-black ${isModal ? 'mb-3' : 'mb-4'}`}>
               Congratulations!
             </h2>
             
-            <p className="text-lg text-tnt-gray mb-8">
+            <p className={`${isModal ? 'text-sm' : 'text-lg'} text-tnt-gray ${isModal ? 'mb-6' : 'mb-8'}`}>
               Your exclusive 10% discount code has been generated! You'll also receive special email promotions for your local TNT Services car wash.
             </p>
             
@@ -161,35 +161,35 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
   return (
     <section id="discount-form" className={isModal ? "" : "py-20 px-4 bg-white"}>
       <div className={isModal ? "mx-auto" : "max-w-2xl mx-auto"}>
-        <div className="bg-white rounded-3xl p-8 md:p-12 fade-in relative" style={{boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px -4px rgba(255, 107, 53, 0.4)'}}>
+        <div className={`bg-white rounded-3xl ${isModal ? 'p-6' : 'p-8 md:p-12'} fade-in relative`} style={{boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px -4px rgba(255, 107, 53, 0.4)'}}>
           {/* Close Button for Modal */}
           {isModal && onClose && (
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+              className="absolute top-3 right-3 p-1 text-gray-400 hover:text-gray-600 transition-colors"
               aria-label="Close"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             </button>
           )}
           
           {/* Header */}
-          <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 bg-tnt-orange rounded-2xl flex items-center justify-center">
-                <Gift className="w-8 h-8 text-white" />
+          <div className={`text-center ${isModal ? 'mb-6' : 'mb-8'}`}>
+            <div className={`flex justify-center ${isModal ? 'mb-3' : 'mb-4'}`}>
+              <div className={`${isModal ? 'w-12 h-12' : 'w-16 h-16'} bg-tnt-orange rounded-2xl flex items-center justify-center`}>
+                <Gift className={`${isModal ? 'w-6 h-6' : 'w-8 h-8'} text-white`} />
               </div>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-tnt-black mb-4">
+            <h2 className={`${isModal ? 'text-xl md:text-2xl' : 'text-3xl md:text-4xl'} font-bold text-tnt-black ${isModal ? 'mb-2' : 'mb-4'}`}>
               Get 10% Off + Exclusive Local Promotions
             </h2>
-            <p className="text-lg text-tnt-gray">
+            <p className={`${isModal ? 'text-sm' : 'text-lg'} text-tnt-gray`}>
               Join our exclusive members list for special discounts and email promotions at your local TNT Services car wash
             </p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className={isModal ? "space-y-4" : "space-y-6"}>
             {/* Name */}
             <div className="relative">
               <label htmlFor="name" className="block text-sm font-semibold text-tnt-black mb-2">
