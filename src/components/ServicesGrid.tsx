@@ -1,4 +1,5 @@
-import { Car, Settings, Wrench, CreditCard, CheckCircle, Gift } from "lucide-react";
+import { Sparkles, Wrench, Crown, Search, Stethoscope, CheckCircle, Icon } from "lucide-react";
+import { wheel } from "@lucide/lab";
 import { useNavigate } from "react-router-dom";
 
 interface ServicesGridProps {
@@ -7,7 +8,15 @@ interface ServicesGridProps {
 
 const services = [
   {
-    icon: Car,
+    icon: Crown,
+    title: "VIP Membership",
+    price: "£39.95/month",
+    description: "Unlimited washes + exclusive perks",
+    features: ["Unlimited washes", "Free air freshener", "Priority booking", "10% off extras"],
+    popular: true
+  },
+  {
+    icon: Sparkles,
     title: "Premium Car Wash",
     price: "£5 - £100",
     description: "Complete exterior and interior cleaning",
@@ -15,7 +24,7 @@ const services = [
     popular: false
   },
   {
-    icon: Settings,
+    icon: wheel,
     title: "Tyre Services",
     price: "From £15",
     description: "Professional tyre fitting and maintenance",
@@ -31,15 +40,7 @@ const services = [
     popular: false
   },
   {
-    icon: CreditCard,
-    title: "VIP Membership",
-    price: "£39.95/month",
-    description: "Unlimited washes + exclusive perks",
-    features: ["Unlimited washes", "Free air freshener", "Priority booking", "10% off extras"],
-    popular: true
-  },
-  {
-    icon: CheckCircle,
+    icon: Search,
     title: "Free Tyre Check",
     price: "FREE",
     description: "Comprehensive tyre safety inspection",
@@ -47,7 +48,7 @@ const services = [
     popular: false
   },
   {
-    icon: Gift,
+    icon: Stethoscope,
     title: "Free Diagnostics",
     price: "FREE",
     description: "Complete vehicle health check",
@@ -84,6 +85,7 @@ const ServicesGrid = ({ onOpenModal }: ServicesGridProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => {
             const IconComponent = service.icon;
+            const isLabIcon = service.title === "Tyre Services";
             return (
               <div 
                 key={service.title}
@@ -100,7 +102,11 @@ const ServicesGrid = ({ onOpenModal }: ServicesGridProps) => {
 
                 {/* Icon */}
                 <div className="flex items-center justify-center w-16 h-16 bg-orange-500 rounded-2xl mb-6">
-                  <IconComponent className="w-8 h-8 text-white" />
+                  {isLabIcon ? (
+                    <Icon iconNode={IconComponent} className="w-8 h-8 text-white" />
+                  ) : (
+                    <IconComponent className="w-8 h-8 text-white" />
+                  )}
                 </div>
 
                 {/* Title and price */}

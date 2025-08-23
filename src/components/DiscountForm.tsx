@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { User, Mail, Phone, Car, Gift, CheckCircle, AlertCircle, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { submitToAirtable } from "@/lib/airtable";
 
 interface DiscountFormProps {
   onClose?: () => void;
@@ -47,12 +48,28 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
     }
 
     try {
-      // Simulate API call - Replace with actual backend integration
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
       // Generate unique discount code
       const code = `TNT10-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       setDiscountCode(code);
+
+      // Prepare data for Airtable
+      const submissionData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        carRegistration: formData.carRegistration,
+        discountCode: code,
+        submittedAt: new Date().toISOString()
+      };
+
+      // Submit to Airtable
+      const airtableSuccess = await submitToAirtable(submissionData);
+      
+      if (!airtableSuccess) {
+        // Log the error but don't fail the user experience
+        console.warn('Failed to submit to Airtable, but showing success to user');
+      }
+
       setIsSuccess(true);
 
       toast({
@@ -66,10 +83,6 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
           onClose();
         }, 5000); // Close after 5 seconds
       }
-
-      // Here you would typically:
-      // 1. Store form data in database (Supabase)
-      // 2. Send email with discount code (SendGrid via Supabase Edge Function)
       
     } catch (error) {
       toast({
