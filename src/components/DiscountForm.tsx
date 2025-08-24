@@ -2,6 +2,7 @@ import { useState } from "react";
 import { User, Mail, Phone, Car, Gift, CheckCircle, AlertCircle, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { submitToAirtable } from "@/lib/airtable";
+import { checkDuplicateRegistration, saveToSupabase } from "@/lib/supabase";
 
 interface DiscountFormProps {
   onClose?: () => void;
@@ -48,12 +49,49 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
     }
 
     try {
-      // Generate unique discount code
+      // 1. Check for duplicate registration in Supabase
+      console.log('🔍 Checking for duplicate registration...');
+      const isDuplicate = await checkDuplicateRegistration(formData.carRegistration);
+      
+      if (isDuplicate) {
+        toast({
+          title: "Registration Already Used",
+          description: "This car registration has already claimed a discount code. Each vehicle is eligible for one discount only.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 2. Generate unique discount code
       const code = `TNT10-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       setDiscountCode(code);
 
-      // Prepare data for Airtable
-      const submissionData = {
+      // 3. Save to Supabase first (for duplicate prevention)
+      console.log('💾 Saving to Supabase...');
+      const supabaseData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        car_registration: formData.carRegistration,
+        discount_code: code
+      };
+      
+      const supabaseSuccess = await saveToSupabase(supabaseData);
+      
+      if (!supabaseSuccess) {
+        toast({
+          title: "Database Error",
+          description: "Unable to save your information. Please try again.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 4. Save to Airtable (for Make.com automation)
+      console.log('📤 Saving to Airtable...');
+      const airtableData = {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
@@ -61,15 +99,15 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
         discountCode: code,
         submittedAt: new Date().toISOString()
       };
-
-      // Submit to Airtable
-      const airtableSuccess = await submitToAirtable(submissionData);
+      
+      const airtableSuccess = await submitToAirtable(airtableData);
       
       if (!airtableSuccess) {
-        // Log the error but don't fail the user experience
-        console.warn('Failed to submit to Airtable, but showing success to user');
+        // Log the error but don't fail the user experience since data is in Supabase
+        console.warn('Failed to submit to Airtable, but data saved to Supabase');
       }
 
+      // 5. Show success
       setIsSuccess(true);
 
       toast({
@@ -85,6 +123,7 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
       }
       
     } catch (error) {
+      console.error('Form submission error:', error);
       toast({
         title: "Something went wrong",
         description: "Please try again or contact our support team.",
@@ -163,6 +202,10 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-green-600" />
                 <span>One-time use per customer</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-600" />
+                <span>Registration {formData.carRegistration} is now registered</span>
               </div>
             </div>
           </div>
@@ -289,7 +332,7 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
                 <AlertCircle className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
                 <div className="text-sm text-blue-800">
                   <p className="font-semibold mb-1">Your privacy matters</p>
-                  <p>We'll only use your information to send your discount code and occasional service updates. No spam, ever.</p>
+                  <p>We'll only use your information to send your discount code and occasional service updates. Each car registration can only claim one discount.</p>
                 </div>
               </div>
             </div>
@@ -303,7 +346,7 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
               {isSubmitting ? (
                 <div className="flex items-center justify-center gap-2">
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Generating Your Code...
+                  Checking Registration...
                 </div>
               ) : (
                 'Get My 10% Discount Code'
