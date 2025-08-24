@@ -1,13 +1,21 @@
 import { createClient } from '@supabase/supabase-js'
 
+// Enhanced debugging for environment variables
+console.log('🔧 Enhanced Supabase Debug:')
+console.log('- All import.meta.env:', import.meta.env)
+console.log('- VITE_SUPABASE_URL value:', import.meta.env.VITE_SUPABASE_URL)
+console.log('- VITE_SUPABASE_ANON_KEY value:', import.meta.env.VITE_SUPABASE_ANON_KEY)
+console.log('- typeof VITE_SUPABASE_URL:', typeof import.meta.env.VITE_SUPABASE_URL)
+console.log('- typeof VITE_SUPABASE_ANON_KEY:', typeof import.meta.env.VITE_SUPABASE_ANON_KEY)
+
 // Supabase configuration with better error handling
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 // Debug logging for environment variables
 console.log('🔧 Supabase Environment Check:')
-console.log('- VITE_SUPABASE_URL:', supabaseUrl ? 'Present' : 'MISSING')
-console.log('- VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? 'Present' : 'MISSING')
+console.log('- VITE_SUPABASE_URL:', supabaseUrl ? `Present (${supabaseUrl.substring(0, 30)}...)` : 'MISSING')
+console.log('- VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? `Present (${supabaseAnonKey.substring(0, 30)}...)` : 'MISSING')
 
 // Check if environment variables are available
 if (!supabaseUrl || !supabaseAnonKey) {
