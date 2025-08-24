@@ -1,10 +1,25 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Supabase configuration
+// Supabase configuration with better error handling
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Debug logging for environment variables
+console.log('🔧 Supabase Environment Check:')
+console.log('- VITE_SUPABASE_URL:', supabaseUrl ? 'Present' : 'MISSING')
+console.log('- VITE_SUPABASE_ANON_KEY:', supabaseAnonKey ? 'Present' : 'MISSING')
+
+// Check if environment variables are available
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('❌ Supabase environment variables missing!')
+  console.error('Required: VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY')
+  console.error('Current values:', { supabaseUrl, supabaseAnonKey })
+}
+
+// Create Supabase client with fallback handling
+export const supabase = supabaseUrl && supabaseAnonKey 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null
 
 // Types
 export interface FormSubmissionDB {
@@ -21,6 +36,12 @@ export interface FormSubmissionDB {
 // Check if a car registration already exists
 export const checkDuplicateRegistration = async (registration: string): Promise<boolean> => {
   try {
+    // If Supabase is not available, allow submission (fallback)
+    if (!supabase) {
+      console.warn('⚠️ Supabase not available, skipping duplicate check')
+      return false
+    }
+
     console.log('🔍 Checking for duplicate registration:', registration.toUpperCase())
     
     const { data, error } = await supabase
@@ -47,6 +68,12 @@ export const checkDuplicateRegistration = async (registration: string): Promise<
 // Save form submission to Supabase
 export const saveToSupabase = async (formData: FormSubmissionDB): Promise<boolean> => {
   try {
+    // If Supabase is not available, skip saving but don't fail
+    if (!supabase) {
+      console.warn('⚠️ Supabase not available, skipping save to Supabase')
+      return true // Return true so the flow continues
+    }
+
     console.log('💾 Saving to Supabase:', formData)
     
     const { data, error } = await supabase
@@ -77,6 +104,11 @@ export const saveToSupabase = async (formData: FormSubmissionDB): Promise<boolea
 // Get all form submissions (for admin use later)
 export const getAllSubmissions = async () => {
   try {
+    if (!supabase) {
+      console.warn('⚠️ Supabase not available')
+      return []
+    }
+
     const { data, error } = await supabase
       .from('form_submissions')
       .select('*')
@@ -92,4 +124,9 @@ export const getAllSubmissions = async () => {
     console.error('❌ Error in getAllSubmissions:', error)
     return []
   }
+}
+
+// Utility function to check if Supabase is available
+export const isSupabaseAvailable = (): boolean => {
+  return !!supabase
 }

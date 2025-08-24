@@ -2,7 +2,7 @@ import { useState } from "react";
 import { User, Mail, Phone, Car, Gift, CheckCircle, AlertCircle, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { submitToAirtable } from "@/lib/airtable";
-import { checkDuplicateRegistration, saveToSupabase } from "@/lib/supabase";
+import { checkDuplicateRegistration, saveToSupabase, isSupabaseAvailable } from "@/lib/supabase";
 
 interface DiscountFormProps {
   onClose?: () => void;
