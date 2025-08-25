@@ -41,6 +41,15 @@ export interface FormSubmissionDB {
   created_at?: string
 }
 
+// Function to normalize registration plates
+export const normalizeRegistration = (registration: string): string => {
+  return registration
+    .toUpperCase()           // Convert to uppercase
+    .replace(/\s+/g, '')     // Remove all spaces
+    .replace(/[^A-Z0-9]/g, '')  // Remove any non-alphanumeric characters
+    .trim()                  // Remove leading/trailing whitespace
+}
+
 // Check if a car registration already exists
 export const checkDuplicateRegistration = async (registration: string): Promise<boolean> => {
   try {
@@ -50,12 +59,15 @@ export const checkDuplicateRegistration = async (registration: string): Promise<
       return false
     }
 
-    console.log('🔍 Checking for duplicate registration:', registration.toUpperCase())
+    // Normalize the registration for checking
+    const normalizedReg = normalizeRegistration(registration)
+    console.log('🔍 Original registration:', registration)
+    console.log('🔍 Normalized registration:', normalizedReg)
     
     const { data, error } = await supabase
       .from('form_submissions')
       .select('car_registration')
-      .eq('car_registration', registration.toUpperCase())
+      .eq('car_registration', normalizedReg)
       .maybeSingle()
     
     if (error) {
@@ -82,7 +94,9 @@ export const saveToSupabase = async (formData: FormSubmissionDB): Promise<boolea
       return true // Return true so the flow continues
     }
 
-    console.log('💾 Saving to Supabase:', formData)
+    // Normalize the registration before saving
+    const normalizedReg = normalizeRegistration(formData.car_registration)
+    console.log('💾 Saving to Supabase with normalized registration:', normalizedReg)
     
     const { data, error } = await supabase
       .from('form_submissions')
@@ -90,7 +104,7 @@ export const saveToSupabase = async (formData: FormSubmissionDB): Promise<boolea
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        car_registration: formData.car_registration.toUpperCase(),
+        car_registration: normalizedReg,  // Use normalized version
         discount_code: formData.discount_code,
         is_active: true
       }])

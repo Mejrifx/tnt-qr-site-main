@@ -2,7 +2,7 @@ import { useState } from "react";
 import { User, Mail, Phone, Car, Gift, CheckCircle, AlertCircle, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { submitToAirtable } from "@/lib/airtable";
-import { checkDuplicateRegistration, saveToSupabase, isSupabaseAvailable } from "@/lib/supabase";
+import { checkDuplicateRegistration, saveToSupabase, isSupabaseAvailable, normalizeRegistration } from "@/lib/supabase";
 
 interface DiscountFormProps {
   onClose?: () => void;
@@ -135,10 +135,21 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    const { name, value } = e.target;
+    
+    // If it's the car registration field, normalize it in real-time
+    if (name === 'carRegistration') {
+      const normalizedValue = normalizeRegistration(value);
+      setFormData(prev => ({
+        ...prev,
+        [name]: normalizedValue
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
   };
 
   if (isSuccess) {
