@@ -198,11 +198,11 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
             <div className="space-y-3 text-sm text-tnt-gray text-left">
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-green-600" />
-                <span>Valid for 30 days from today</span>
+                <span>Valid for 14 days from today</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-green-600" />
-                <span>Applicable to all services (excluding memberships)</span>
+                <span>Applicable to all services (including first month of memberships)</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-green-600" />
