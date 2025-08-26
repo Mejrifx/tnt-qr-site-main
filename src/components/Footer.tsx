@@ -110,7 +110,7 @@ const Footer = () => {
               © 2025 TNT Services. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
-              <a href="#" className="text-white hover:text-orange-400 transition-colors">
+              <a href="/privacy-policy" className="text-white hover:text-orange-400 transition-colors">
                 Privacy Policy
               </a>
               <a href="#" className="text-white hover:text-orange-400 transition-colors">
