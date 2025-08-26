@@ -18,7 +18,7 @@ const services = [
   {
     icon: Sparkles,
     title: "Premium Car Wash",
-    price: "£5 - £100",
+    price: "From £5",
     description: "Complete exterior and interior cleaning",
     features: ["Foam wash", "Wheel cleaning", "Interior vacuum", "Polish & wax"],
     popular: false
