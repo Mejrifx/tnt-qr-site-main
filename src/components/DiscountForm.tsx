@@ -115,12 +115,6 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
         description: "Your exclusive discount code has been generated and sent to your email.",
       });
 
-      // Auto-close modal after success (if in modal mode)
-      if (isModal && onClose) {
-        setTimeout(() => {
-          onClose();
-        }, 5000); // Close after 5 seconds
-      }
       
     } catch (error) {
       console.error('Form submission error:', error);
