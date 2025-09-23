@@ -90,7 +90,7 @@ const PrivacyPolicy = () => {
                 Your privacy is important to us, so we've developed this Privacy Policy, which explains how we collect, use, and disclose your personal information. We collect personal information when you use our website(s), mobile apps, and other online and offline products, services and experiences (collectively, the "Services"). Please take a moment to read through this Policy in its entirety.
               </p>
               <p className="text-tnt-gray leading-relaxed">
-                If you have any questions, concerns or complaints regarding this Privacy Policy or how we use your personal information please contact us via e-mail at <a href="mailto:tntservicesmanchester@gmail.com" className="text-tnt-orange hover:text-tnt-orange-dark font-medium">tntservicesmanchester@gmail.com</a>.
+                If you have any questions, concerns or complaints regarding this Privacy Policy or how we use your personal information please contact us via e-mail at <a href="mailto:tnttires@outlook.com" className="text-tnt-orange hover:text-tnt-orange-dark font-medium">tnttires@outlook.com</a>.
               </p>
             </section>
 
@@ -206,7 +206,7 @@ const PrivacyPolicy = () => {
                 When you sign up for a promotion like a sweepstakes, or subscribe to receive our newsletter or marketing/promotional messages, we use your personal information to help us decide which products, services and offers may be of interest to you.
               </p>
               <p className="text-tnt-gray leading-relaxed">
-                You may unsubscribe from marketing messages through a link we include on messages we send you. You can also ask us to stop sending you marketing messages at any time by contacting us at: <a href="mailto:tntservicesmanchester@gmail.com" className="text-tnt-orange hover:text-tnt-orange-dark font-medium">tntservicesmanchester@gmail.com</a>.
+                You may unsubscribe from marketing messages through a link we include on messages we send you. You can also ask us to stop sending you marketing messages at any time by contacting us at: <a href="mailto:tnttires@outlook.com" className="text-tnt-orange hover:text-tnt-orange-dark font-medium">tnttires@outlook.com</a>.
               </p>
             </section>
 
@@ -288,8 +288,8 @@ const PrivacyPolicy = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <Mail className="w-5 h-5 text-tnt-orange flex-shrink-0" />
-                    <a href="mailto:tntservicesmanchester@gmail.com" className="text-tnt-orange hover:text-tnt-orange-dark font-medium">
-                      tntservicesmanchester@gmail.com
+                    <a href="mailto:tnttires@outlook.com" className="text-tnt-orange hover:text-tnt-orange-dark font-medium">
+                      tnttires@outlook.com
                     </a>
                   </div>
                 </div>
@@ -316,3 +316,4 @@ const PrivacyPolicy = () => {
 };
 
 export default PrivacyPolicy;
+

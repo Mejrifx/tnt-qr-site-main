@@ -71,8 +71,8 @@ const Footer = () => {
                 <Mail className="w-5 h-5 text-tnt-orange flex-shrink-0" />
                 <div>
                   <p className="font-semibold">Email Us</p>
-                  <a href="mailto:hello@tntcarwash.co.uk" className="text-white hover:text-orange-400 transition-colors">
-                    hello@tntcarwash.co.uk
+                  <a href="mailto:tnttires@outlook.com" className="text-white hover:text-orange-400 transition-colors">
+                    tnttires@outlook.com
                   </a>
                 </div>
               </div>
