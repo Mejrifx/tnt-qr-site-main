@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock, Facebook, Twitter, Instagram } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 
 const Footer = () => {
@@ -16,29 +16,6 @@ const Footer = () => {
               Your trusted automotive experts providing premium car washes, professional tyre services, 
               and reliable mechanical repairs. Quality you can trust, service you can rely on.
             </p>
-            <div className="flex gap-4">
-              <a 
-                href="#" 
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-tnt-orange transition-colors duration-200"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a 
-                href="#" 
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-tnt-orange transition-colors duration-200"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a 
-                href="#" 
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-tnt-orange transition-colors duration-200"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-            </div>
           </div>
 
           {/* Contact Info */}

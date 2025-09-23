@@ -48,17 +48,6 @@ const pricingData = [
     ]
   },
   {
-    icon: Users,
-    title: "Taxi/Business",
-    description: "Professional vehicle cleaning",
-    services: [
-      { name: "Wash & Go", price: "£7" },
-      { name: "Wash & Dry", price: "£10" },
-      { name: "Mini Valet", price: "£12" },
-      { name: "Full Valet", price: "£40" }
-    ]
-  },
-  {
     icon: Settings,
     title: "Services/Tyres",
     description: "Professional automotive services",
@@ -68,6 +57,17 @@ const pricingData = [
       { name: "Puncture Repair", price: "From £5" },
       { name: "Brakes/Service", price: "From £40" },
       { name: "MOT", price: "From £45" }
+    ]
+  },
+  {
+    icon: Users,
+    title: "Taxi/Business",
+    description: "Professional vehicle cleaning",
+    services: [
+      { name: "Wash & Go", price: "£7" },
+      { name: "Wash & Dry", price: "£10" },
+      { name: "Mini Valet", price: "£12" },
+      { name: "Full Valet", price: "£40" }
     ]
   }
 ];
@@ -185,7 +185,7 @@ const Pricing = () => {
                   Call +44 745 990 5165
                 </button>
                 <button 
-                  onClick={() => navigate('/')}
+                  onClick={() => window.open('https://maps.app.goo.gl/Q53NCpfKK6LWwXHv5', '_blank')}
                   className="px-8 py-3 bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold transition-all duration-200 hover:bg-white/30"
                 >
                   Get Directions
