@@ -62,7 +62,8 @@ const ServicesGrid = ({ onOpenModal }: ServicesGridProps) => {
 
   const handleButtonClick = (service: typeof services[0]) => {
     if (service.price === 'FREE') {
-      document.getElementById('discount-form')?.scrollIntoView({ behavior: 'smooth' });
+      // Trigger immediate phone call for free services
+      window.open('tel:+447459905165');
     } else {
       navigate('/pricing');
     }
@@ -135,7 +136,7 @@ const ServicesGrid = ({ onOpenModal }: ServicesGridProps) => {
                       : 'bg-gray-100 border-2 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white'
                   }`}
                 >
-                  {service.price === 'FREE' ? 'Book Free Check' : 'View Full Prices'}
+                  {service.price === 'FREE' ? 'Call Us Now' : 'View Full Prices'}
                 </button>
               </div>
             );
