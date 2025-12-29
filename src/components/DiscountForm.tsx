@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { User, Mail, Phone, Car, Gift, CheckCircle, AlertCircle, X } from "lucide-react";
+import { useState, useRef } from "react";
+import { User, Mail, Phone, Car, Gift, CheckCircle, AlertCircle, X, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { submitToAirtable } from "@/lib/airtable";
 import { checkDuplicateRegistration, saveToSupabase, isSupabaseAvailable, normalizeRegistration } from "@/lib/supabase";
+import html2canvas from "html2canvas";
 
 interface DiscountFormProps {
   onClose?: () => void;
@@ -21,6 +22,8 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [discountCode, setDiscountCode] = useState('');
   const [generatedAt, setGeneratedAt] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const discountRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -161,6 +164,49 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
     }
   };
 
+  const handleSaveImage = async () => {
+    if (!discountRef.current) return;
+    
+    setIsSaving(true);
+    try {
+      const canvas = await html2canvas(discountRef.current, {
+        backgroundColor: '#ffffff',
+        scale: 2, // Higher quality
+        logging: false,
+        useCORS: true
+      });
+      
+      // Convert canvas to blob
+      canvas.toBlob((blob) => {
+        if (blob) {
+          // Create a download link
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `TNT-Discount-${discountCode}.png`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+          
+          toast({
+            title: "Saved Successfully!",
+            description: "Your discount code has been saved to your device.",
+          });
+        }
+      }, 'image/png');
+    } catch (error) {
+      console.error('Error saving image:', error);
+      toast({
+        title: "Save Failed",
+        description: "Unable to save the image. Please screenshot instead.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   if (isSuccess) {
     // Format the timestamp for display
     const formattedDate = new Date(generatedAt).toLocaleDateString('en-GB', {
@@ -204,7 +250,10 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
             </p>
             
             {/* Discount Code Box */}
-            <div className="bg-gradient-to-br from-tnt-orange/10 to-tnt-orange/5 border-2 border-tnt-orange rounded-2xl p-6 mb-6">
+            <div 
+              ref={discountRef}
+              className="bg-gradient-to-br from-tnt-orange/10 to-tnt-orange/5 border-2 border-tnt-orange rounded-2xl p-6 mb-6"
+            >
               <p className="text-sm text-tnt-gray mb-2">Your Discount Code:</p>
               <div className="text-2xl md:text-3xl font-bold text-tnt-orange font-mono mb-4">
                 {discountCode}
@@ -230,11 +279,30 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
                 <div className="text-left">
                   <p className="font-semibold text-blue-900 mb-1">📸 Screenshot This Now!</p>
                   <p className="text-sm text-blue-700">
-                    This is your proof of discount. Screenshot or save this page before closing. You'll also receive a copy via email.
+                    This is your proof of discount. Screenshot or save this page before closing.
                   </p>
                 </div>
               </div>
             </div>
+
+            {/* Save Button */}
+            <button
+              onClick={handleSaveImage}
+              disabled={isSaving}
+              className="w-full mb-6 py-3 px-6 bg-tnt-orange text-white rounded-xl font-semibold transition-all duration-200 hover:bg-tnt-orange-dark hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              {isSaving ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <Download className="w-5 h-5" />
+                  Save to Gallery
+                </>
+              )}
+            </button>
             
             {/* Terms */}
             <div className="space-y-3 text-sm text-tnt-gray text-left">
@@ -393,7 +461,7 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
                 >
                   Privacy Policy
                 </a>
-                {' '}and consent to receiving promotional emails from TNT Services. (Required)
+                {' '}and consent to receiving promotional emails from TNT Services.
               </label>
             </div>
 
