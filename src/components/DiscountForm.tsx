@@ -16,9 +16,11 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
     phone: '',
     carRegistration: ''
   });
+  const [privacyPolicyAccepted, setPrivacyPolicyAccepted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [discountCode, setDiscountCode] = useState('');
+  const [generatedAt, setGeneratedAt] = useState('');
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,6 +32,17 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
       toast({
         title: "Please fill in all fields",
         description: "All fields are required to generate your discount code.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Privacy policy validation
+    if (!privacyPolicyAccepted) {
+      toast({
+        title: "Privacy Policy Required",
+        description: "Please accept our privacy policy to continue.",
         variant: "destructive",
       });
       setIsSubmitting(false);
@@ -65,7 +78,9 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
 
       // 2. Generate unique discount code
       const code = `TNT10-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      const timestamp = new Date().toISOString();
       setDiscountCode(code);
+      setGeneratedAt(timestamp);
 
       // 3. Save to Supabase first (for duplicate prevention)
       console.log('💾 Saving to Supabase...');
@@ -147,6 +162,18 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
   };
 
   if (isSuccess) {
+    // Format the timestamp for display
+    const formattedDate = new Date(generatedAt).toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+    const formattedTime = new Date(generatedAt).toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
+
     return (
       <section id="discount-form" className={isModal ? "" : "py-20 px-4 bg-white"}>
         <div className={isModal ? "mx-auto text-center" : "max-w-2xl mx-auto text-center"}>
@@ -176,25 +203,40 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
               Your exclusive 10% discount code has been generated! You'll also receive special email promotions for your local TNT Services car wash.
             </p>
             
-            <div className="bg-tnt-gray-light rounded-2xl p-6 mb-8">
+            {/* Discount Code Box */}
+            <div className="bg-gradient-to-br from-tnt-orange/10 to-tnt-orange/5 border-2 border-tnt-orange rounded-2xl p-6 mb-6">
               <p className="text-sm text-tnt-gray mb-2">Your Discount Code:</p>
-              <div className="text-2xl md:text-3xl font-bold text-tnt-orange font-mono">
+              <div className="text-2xl md:text-3xl font-bold text-tnt-orange font-mono mb-4">
                 {discountCode}
+              </div>
+              
+              {/* Car Registration & Timestamp */}
+              <div className="space-y-2 pt-4 border-t border-tnt-orange/20">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-tnt-gray">Vehicle Registration:</span>
+                  <span className="font-semibold text-tnt-black">{formData.carRegistration}</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-tnt-gray">Generated:</span>
+                  <span className="font-semibold text-tnt-black">{formattedDate} at {formattedTime}</span>
+                </div>
               </div>
             </div>
             
-            <div className="bg-blue-50 rounded-xl p-4 mb-8">
+            {/* Screenshot Notice */}
+            <div className="bg-blue-50 rounded-xl p-4 mb-6">
               <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
+                <AlertCircle className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
                 <div className="text-left">
-                  <p className="font-semibold text-blue-900">Check your email!</p>
+                  <p className="font-semibold text-blue-900 mb-1">📸 Screenshot This Now!</p>
                   <p className="text-sm text-blue-700">
-                    We've sent your discount code and booking instructions to <strong>{formData.email}</strong>
+                    This is your proof of discount. Screenshot or save this page before closing. You'll also receive a copy via email.
                   </p>
                 </div>
               </div>
             </div>
             
+            {/* Terms */}
             <div className="space-y-3 text-sm text-tnt-gray text-left">
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-green-600" />
@@ -210,7 +252,7 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-green-600" />
-                <span>Registration {formData.carRegistration} is now registered</span>
+                <span>Valid for registration {formData.carRegistration} only</span>
               </div>
             </div>
           </div>
@@ -329,6 +371,30 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
                   required
                 />
               </div>
+            </div>
+
+            {/* Privacy Policy Checkbox */}
+            <div className="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="privacyPolicy"
+                checked={privacyPolicyAccepted}
+                onChange={(e) => setPrivacyPolicyAccepted(e.target.checked)}
+                className="mt-1 w-4 h-4 text-tnt-orange border-gray-300 rounded focus:ring-tnt-orange focus:ring-2"
+                required
+              />
+              <label htmlFor="privacyPolicy" className={`${isModal ? 'text-xs sm:text-sm' : 'text-sm'} text-tnt-gray`}>
+                I agree to the{' '}
+                <a 
+                  href="/privacy-policy" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-tnt-orange hover:text-tnt-orange-dark font-semibold underline"
+                >
+                  Privacy Policy
+                </a>
+                {' '}and consent to receiving promotional emails from TNT Services. (Required)
+              </label>
             </div>
 
             {/* Privacy notice */}
