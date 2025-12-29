@@ -128,11 +128,6 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
       // 5. Show success
       setIsSuccess(true);
 
-      toast({
-        title: "Success!",
-        description: "Your exclusive discount code has been generated and sent to your email.",
-      });
-
       
     } catch (error) {
       console.error('Form submission error:', error);
@@ -299,7 +294,7 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
               ) : (
                 <>
                   <Download className="w-5 h-5" />
-                  Save to Gallery
+                  Save to Device
                 </>
               )}
             </button>
