@@ -172,23 +172,53 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
       });
       
       // Convert canvas to blob
-      canvas.toBlob((blob) => {
-        if (blob) {
-          // Create a download link
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = `TNT-Discount-${discountCode}.png`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
-          
-          toast({
-            title: "Saved Successfully!",
-            description: "Your discount code has been saved to your device.",
-          });
+      canvas.toBlob(async (blob) => {
+        if (!blob) return;
+        
+        const fileName = `TNT-Discount-${discountCode}.png`;
+        
+        // Try Web Share API first (works on mobile for saving to camera roll)
+        if (navigator.share && navigator.canShare) {
+          try {
+            const file = new File([blob], fileName, { type: 'image/png' });
+            const shareData = {
+              files: [file],
+              title: 'TNT Services Discount Code',
+              text: `My 10% TNT Services discount code: ${discountCode}`
+            };
+            
+            // Check if sharing files is supported
+            if (navigator.canShare(shareData)) {
+              await navigator.share(shareData);
+              toast({
+                title: "Saved Successfully!",
+                description: "Your discount code has been saved to your photos.",
+              });
+              setIsSaving(false);
+              return;
+            }
+          } catch (shareError) {
+            // User cancelled or share failed, fall back to download
+            console.log('Share cancelled or failed, falling back to download');
+          }
         }
+        
+        // Fallback: Traditional download (desktop or if share API unavailable)
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        
+        toast({
+          title: "Saved Successfully!",
+          description: "Your discount code has been saved to your device.",
+        });
+        
+        setIsSaving(false);
       }, 'image/png');
     } catch (error) {
       console.error('Error saving image:', error);
@@ -197,7 +227,6 @@ const DiscountForm = ({ onClose, isModal = false }: DiscountFormProps) => {
         description: "Unable to save the image. Please screenshot instead.",
         variant: "destructive",
       });
-    } finally {
       setIsSaving(false);
     }
   };
